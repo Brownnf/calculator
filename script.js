@@ -52,5 +52,34 @@ del.addEventListener('click', function(){
     }
 });
 
+//Event listener for Positive/Negative switcher
+let switcher = document.getElementById('switcher');
+switcher.addEventListener('click', function(){
+    //Check to make sure display has only numbers and isn't empty
+    if(isNaN(display.textContent) == false && display.textContent !== ""){
+        if(Array.from(display.textContent)[0] == '-'){
+            display.textContent = display.textContent.substring(1)
+        }
+        else if(Array.from(display.textContent)[0] !== '-'){
+            display.textContent = `-${display.textContent}`;
+        }
+    }
+});
+
+//Event listener for decimal button
+let decimal = document.getElementById('decimal');
+decimal.addEventListener('click', function(){
+    if(display.textContent.includes('.') == false){
+        display.textContent = `${display.textContent}.`;
+    }
+});
+
 //Event listener for the Clear All button
+
 //Event listener for operators
+let operators = Array.from(document.getElementsByClassName('operators'));
+operators.addEventListener('click', function(){
+    switch(operators.textContent){
+
+    }
+});
