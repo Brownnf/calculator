@@ -1,7 +1,5 @@
 
 function operate(num1, operator, num2){
-    let number1 = Number(num1);
-    let number2 = Number(num2);
     switch(operator){
         case '+':
            return (parseFloat(num1) + parseFloat(num2));
@@ -17,6 +15,7 @@ function operate(num1, operator, num2){
     }
 }
 
+//Calc object
 let calc = {
     num1: "",
     operator: "",
@@ -52,7 +51,6 @@ let del = document.getElementById('delete');
 del.addEventListener('click', function(){
     //Make sure string isn't empty
     if(display.textContent.length > 0){
-
     display.textContent = display.textContent.substring(0,display.textContent.length-1);
     }
 });
@@ -79,7 +77,6 @@ decimal.addEventListener('click', function(){
     }
 });
 
-//Event listener for the Clear All button
 
 //Event listener for operators
 let operators = Array.from(document.getElementsByClassName('operator'));
@@ -96,11 +93,9 @@ operators.forEach(element => {
             clearCalc();
 
         }
-        else{
-
-        }
     });
 });
+
 
 //Event listener for clear all button
 let clearAll = document.getElementById('ce');
