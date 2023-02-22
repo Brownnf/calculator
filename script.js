@@ -30,7 +30,7 @@ let display = document.getElementById('display');
 numbers.forEach(element => {
     element.addEventListener('click',function(){
             //stop user from having multiple 0's and clear the display if an operation has occured and the user attempts to hit a number without hitting another operator.
-            if(calc.operator == "" && display.textContent == "" || display.textContent == 0){
+            if(calc.operator == "" && display.textContent == "" || display.textContent == "0"){
                 display.textContent = element.textContent;
             }
             else{
@@ -38,6 +38,22 @@ numbers.forEach(element => {
             }
     })
 });
+
+
+//Event listener for keydown on numbers
+    document.addEventListener('keydown',function(e){
+        if ((e.key >= 0 && e.key <= 9) || (e.key >= 96 && e.key <= 105)) { 
+            if(calc.operator == "" && display.textContent == "" || display.textContent == "0"){
+                console.log(display.textContent == 0)
+                console.log(display.textContent);
+                console.log("this is called")
+                display.textContent = e.key;
+            }
+            else{
+                display.textContent += e.key;
+            }
+          }
+    });
 
 
 //Event listener for the clear button
@@ -70,12 +86,18 @@ switcher.addEventListener('click', function(){
 });
 
 //Event listener for decimal button
-let decimal = document.getElementById('decimal');
-decimal.addEventListener('click', function(){
+let decimalButton = document.getElementById('decimal');
+document.addEventListener('keydown', function(key){
+    if(key.key == "."){
+        decimal();
+    }
+});
+decimalButton.addEventListener('click', decimal);
+function decimal(){
     if(display.textContent.includes('.') == false || `${display.textContent.replace(`${calc.num1}${calc.operator}`, "")}`.includes(".") == false){
         display.textContent = `${display.textContent}.`;
     }
-});
+};
 
 
 //Event listener for operators
