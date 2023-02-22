@@ -1,21 +1,26 @@
-function add(num1, num2){
-    return (num1 + num2);
+
+function operate(num1, operator, num2){
+    let number1 = Number(num1);
+    let number2 = Number(num2);
+    switch(operator){
+        case '+':
+           return (parseFloat(num1) + parseFloat(num2));
+        case '-':
+            return (parseFloat(num1) - parseFloat(num2));
+        case '*':
+            return (parseFloat(num1) * parseFloat(num2));
+        case '/':
+            return (parseFloat(num1) / parseFloat(num2));
+        default:
+            return "ERROR";
+
+    }
 }
 
-function subtract(num1, num2){
-    return (num2 - num1);
-}
-
-function multiply(num1, num2){
-    return (num1 * num2);
-}
-
-function divide(num1, num2){
-    return (num2 / num1);
-}
-
-function operate(){
-
+let calc = {
+    num1: "",
+    operator: "",
+    num2: "",
 }
 
 
@@ -25,8 +30,8 @@ let display = document.getElementById('display');
 
 numbers.forEach(element => {
     element.addEventListener('click',function(){
-            //stop user from having multiple 0's
-            if(display.textContent == 0){
+            //stop user from having multiple 0's and clear the display if an operation has occured and the user attempts to hit a number without hitting another operator.
+            if(calc.operator == "" && display.textContent == "" || display.textContent == 0){
                 display.textContent = element.textContent;
             }
             else{
@@ -69,7 +74,7 @@ switcher.addEventListener('click', function(){
 //Event listener for decimal button
 let decimal = document.getElementById('decimal');
 decimal.addEventListener('click', function(){
-    if(display.textContent.includes('.') == false){
+    if(display.textContent.includes('.') == false || `${display.textContent.replace(`${calc.num1}${calc.operator}`, "")}`.includes(".") == false){
         display.textContent = `${display.textContent}.`;
     }
 });
@@ -77,9 +82,37 @@ decimal.addEventListener('click', function(){
 //Event listener for the Clear All button
 
 //Event listener for operators
-let operators = Array.from(document.getElementsByClassName('operators'));
-operators.addEventListener('click', function(){
-    switch(operators.textContent){
+let operators = Array.from(document.getElementsByClassName('operator'));
+operators.forEach(element => {
+    element.addEventListener('click',function(){
+        if(calc.num1 == ""){
+            calc.num1 = display.textContent;
+            calc.operator = element.textContent;
+            display.textContent = `${display.textContent}${element.textContent}`;
+        }
+        else if(isNaN(calc.num1) == false && calc.num2 == ""){
+            calc.num2 = display.textContent.replace(`${calc.num1}${calc.operator}`, "");
+            display.textContent = operate(calc.num1, calc.operator, calc.num2);
+            clearCalc();
 
-    }
+        }
+        else{
+
+        }
+    });
 });
+
+//Event listener for clear all button
+let clearAll = document.getElementById('ce');
+clearAll.addEventListener('click', function(){
+    display.textContent = "";
+    clearCalc();
+
+});
+
+
+function clearCalc(){
+    calc.num1 = "";
+    calc.operator = "";
+    calc.num2 = "";
+}
