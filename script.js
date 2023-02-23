@@ -44,9 +44,6 @@ numbers.forEach(element => {
     document.addEventListener('keydown',function(e){
         if ((e.key >= 0 && e.key <= 9) || (e.key >= 96 && e.key <= 105)) { 
             if(calc.operator == "" && display.textContent == "" || display.textContent == "0"){
-                console.log(display.textContent == 0)
-                console.log(display.textContent);
-                console.log("this is called")
                 display.textContent = e.key;
             }
             else{
@@ -62,12 +59,21 @@ clearB.addEventListener('click', function(){
     display.textContent = "";
 });
 
+
 //Event listener for the Delete button
 let del = document.getElementById('delete');
 del.addEventListener('click', function(){
     //Make sure string isn't empty
     if(display.textContent.length > 0){
     display.textContent = display.textContent.substring(0,display.textContent.length-1);
+    }
+});
+document.addEventListener('keydown', function(key){
+    if(key.key == "Backspace"){
+            //Make sure string isn't empty
+            if(display.textContent.length > 0){
+            display.textContent = display.textContent.substring(0,display.textContent.length-1);
+            }
     }
 });
 
@@ -116,6 +122,23 @@ operators.forEach(element => {
 
         }
     });
+});
+
+document.addEventListener('keydown',function(key){
+    if(key.key == "+" || key.key == "-" || key.key == "*" || key.key == "/" || key.key == "=" | key.key == "Enter"){
+        if(calc.num1 == ""){
+            calc.num1 = display.textContent;
+            calc.operator = key.key;
+            display.textContent = `${display.textContent}${key.key}`;
+        }
+        else if(isNaN(calc.num1) == false && calc.num2 == ""){
+            calc.num2 = display.textContent.replace(`${calc.num1}${calc.operator}`, "");
+            display.textContent = operate(calc.num1, calc.operator, calc.num2);
+            clearCalc();
+
+        }
+        event.preventDefault();
+    }
 });
 
 
